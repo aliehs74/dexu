@@ -19,7 +19,7 @@ export default function RangeController() {
   const debouncedDispatchRange = useMemo(() => {
     return debounce((start: number, end: number) => {
       dispatch(setRange([start * EApiConfig.PAGE_SIZE, end * EApiConfig.PAGE_SIZE]));
-    }, 300);
+    }, 500);
   }, [dispatch]);
 
   useEffect(() => {

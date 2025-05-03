@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IPaginatedData } from '@/types/dataType';
+import { IDataDTO, IPaginatedData } from '@/types/dataType';
 
 const BASE_URL = '/api';
 
@@ -7,11 +7,12 @@ export const coinsApi = createApi({
   reducerPath: 'coinsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getCoins: builder.query<IPaginatedData, { page: number; size: number }>({
+    getCoins: builder.query<IDataDTO[], { page: number; size: number }>({
       query: ({ page, size }) => `coins?page=${page}&size=${size}`,
+      transformResponse: (response: IPaginatedData) => response.items,
     }),
 
-    getCoinsBatch: builder.query<any[], void>({
+    getCoinsBatch: builder.query<IDataDTO[], void>({
       async queryFn(_arg, _api, _extraOptions, fetchWithBQ) {
         const size = 100;
         const promises = [];
